@@ -1,11 +1,15 @@
 import React, {useState, useEffect} from 'react'
+import arrowdown from './arrowdown.svg'
+import pointerWhite from './pointerWhite.png'
 
 let countryList: string[]= ['Africa','America','Asia','Europe','Oceania']
 interface User{
-    modeToggle: any;
-    opacity: number
+    handleSelectFilter: (value:string)=>void,
+    toggleMode: boolean
 }
-const Select:React.FC =()=>{
+const Select:React.FC<User> =(props)=>{
+    const toggleMode = props.toggleMode
+    const handleSelectFilter= props.handleSelectFilter
     const [list, setList]= useState<string[]>([])
     const [display, setDisplay] = useState(false);
     useEffect(()=>{
@@ -20,27 +24,28 @@ const Select:React.FC =()=>{
 
     const handleButClick=()=>{
         setDisplay(display=>!display)
-        console.log(display)
     }
-   
     const [selectedValue, setSelectedValue] = useState('Filter by Region')
-    const handleOptClick=({currentTarget}: React.MouseEvent<HTMLDivElement>)=>{
-        setSelectedValue(currentTarget.id)
+   
+    const handleOptClick=(e: React.MouseEvent<HTMLDivElement>)=>{
+        setSelectedValue(e.currentTarget.id)
         handleButClick()
     }
+    useEffect(()=>{
+        handleSelectFilter(selectedValue)
+    },[selectedValue])
+
 
     return(
         <div id='parentDiv'>
-           <button className='select child-light' onClick={handleButClick}>
-                {selectedValue}
+           <button className={`select ${toggleMode?'child-light': 'child-dark'}`} onClick={handleButClick} 
+           style={toggleMode?{backgroundImage: `url(${arrowdown})`}:{backgroundImage:`url(${pointerWhite})`}}>
+                <p>{selectedValue}</p>
            </button>
            {display?
-            <div id='options' className='child-light styleParent'>
-                <div className='styleChild'>
-                    <p className='opt-div'>Filter by Region</p>
-                </div>
+            <div id='options' className={`${toggleMode?'child-light': 'child-dark'} styleParent`}>
                 {list.map(item=>{
-                    return (<div  key={item} id={item} className='opt-div-cnt styleChild' onClick={handleOptClick}>
+                    return (<div  key={item} id={item} className='opt-div-cnt styleChild ' onClick={handleOptClick}>
                         <p className='opt-div'>{item}</p>
                     </div>)
                 })}

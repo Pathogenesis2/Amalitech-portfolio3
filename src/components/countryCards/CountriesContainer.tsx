@@ -1,7 +1,5 @@
-import React, {useState, useEffect, useContext} from 'react'
-import axios from 'axios'
+import React from 'react'
 import Countries from './Countries'
-import {GlobalContext, GlobalContextType} from '../store/helper';
 
 interface User {
   flags:{
@@ -16,20 +14,16 @@ interface User {
   continents: string[];
 }
 
+interface propsType{
+  countries: User[];
+  toggleMode: boolean
+}
 
-const CountriesContainer=()=>{
-  
-  const [countries, setCountries]=useState<User[]>([])
-    useEffect(() => {
-    const getCountries= async ()=>{
-      axios.get('https://restcountries.com/v3.1/all')
-      .then((res) => {
-        setCountries(res.data)
-      }).catch((err) => console.log(err));
-    }
-    getCountries()
-  },[])  
-  return <Countries countries={countries}/>
+
+const CountriesContainer:React.FC<propsType>=(props)=>{
+  const countries=props.countries
+  const toggleMode=props.toggleMode
+  return <Countries countries={countries} toggleMode={toggleMode}/>
 } 
 
 export default CountriesContainer

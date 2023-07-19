@@ -3,11 +3,15 @@ import Search from './search/Search'
 import Select from './select/Select'
 
 interface User{
-  modeToggle: boolean;
+  handleSearchFilter: (value:string)=>void;
+  handleSelectFilter: (value:string)=>void
+  toggleMode:boolean
 }
 
-const BottomHeader:React.FC=()=>{
-   
+const BottomHeader:React.FC<User>=(props)=>{
+   const handleSearchFilter= props.handleSearchFilter
+   const handleSelectFilter = props.handleSelectFilter
+   const toggleMode= props.toggleMode
     const [opacity, setOpacity] = useState(1)
     useEffect(()=>{
       const handleScroll=()=>{
@@ -30,9 +34,9 @@ const BottomHeader:React.FC=()=>{
     return(
         <div id='bottom-h-cnt'>
                 <div id='bottom-header' >
-                    <Search/>
+                    <Search handleSearchFilter={handleSearchFilter} toggleMode={toggleMode}/>
                     <div id='container'>
-                        <Select/>
+                        <Select handleSelectFilter={handleSelectFilter} toggleMode={toggleMode}/>
                     </div> 
                 </div>
         </div> 

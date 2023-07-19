@@ -7,29 +7,33 @@
   font-family: 'Nunito Sans', sans-serif;
 }
 body{
-  height: auto
+  height: auto;
 }
 .body-light{
   background-color:#f3f3f3;
   color : #000000;
   width: auto;
-  height: auto;
-  transition: 1s
+  min-height: 64vw;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
 }
 .body-dark{
   background-color:#202C36;
   color : #ffffff;
   width: auto;
-  height: auto;
-  transition:1s
+  min-height: 64vw;
+  max-height: auto;
+  overflow: hidden;
 }
 .child-light{
   background-color: #ffffff;
-  transition:1s
 }
 .child-dark{
   background-color: #2B3844;
-  transition:1s
+}
+#parentDiv{
+  height: auto
 }
 #header{
   width: 100%;
@@ -44,7 +48,6 @@ body{
   display: flex;
   width: 100%;
   margin: auto;
-  transition:1s;
 }
 #top-header{
   justify-content: end;
@@ -124,16 +127,18 @@ body{
 }
 #modeimg{
   width: 1.0vw;
-  height: 0.96vw
+  height: 1.0vw
 }
 #countries{
-  height: auto;
+  height: 100%;
   display: grid;
   grid-template-columns: 26.47% 26.47% 26.47% 26.47%;
+  grid-template-rows: auto;
   margin: auto;
   width: 90%;
   position: relative;
   top: 15.5vw;
+  margin-bottom: 20.5vw
 }
 
 .flag{
@@ -147,10 +152,12 @@ body{
   top: 1.8vw;
 }
 .cardItem{
-  font-weight: 300;
-  font-size: 0.97vw;
   margin-left: 1vw;
   position: relative;
+}
+.desc-item{
+  font-weight: 300;
+  font-size: 0.97vw;
 }
 .bold{
   font-weight: 600;
@@ -188,9 +195,17 @@ body{
   margin-bottom: 5vw;
   width: 18.3vw;
   height: 22.5vw;
-  border-radius: 0.3vw
+  border-radius: 0.3vw;
 }
-.srch-black::placeholder{
+#card:hover{
+  transition: 100ms;
+  transform: scale(1.1);
+}
+.srch-dark{
+  background-color: #2B3844;
+  color: white
+}
+.srch-dark::placeholder{
   color: white
 }
 .styleParent{
@@ -199,4 +214,202 @@ body{
 }
 .styleChild{
   margin-top:0.5vw
+}
+.concealor{
+  position:absolute;
+  top: 10vw;
+  width: 100%;
+  height: 160px;
+  z-index: -1;
+}
+.concealor-light{
+  background-color: #f3f3f3;
+}
+.concealor-dark{
+  background-color:#202C36
+}
+@media (min-width: 481px) and (max-width: 1024px){
+  #top-h-cnt{
+    height:7vw;
+  }
+  #bottom-header{
+    margin-top: 5vw;
+  }
+  #modes{
+    font-size: 2vw;
+    display: flex;
+    justify-content: flex-end;
+    width: 20%;
+  }
+  
+  #intro{
+    font-size: 2.4vw
+  }
+  #search{
+    width: 33.3vw;
+  }
+  .select{
+    width: 16.9vw;
+  }
+  .select,#search,#options{
+    height: 5.3vw;
+    font-size: 1.7vw;
+  }
+  #modeimg{
+    width: 2vw;
+    height: 2vw
+  }
+  #countries{
+    display: flex;
+    flex-wrap: wrap;
+    top: 22vw;
+    justify-content: space-between;
+    margin-bottom: 25vw
+  }
+  #card{
+    flex-basis: 47%;
+    margin-bottom: 5vw;
+    width: 28.3vw;
+    height: 40.5vw;
+    border-radius: 0.3vw
+  }
+  .flag{
+    width: 100%;
+    height: 21.1vw;
+    border-radius: 0.3vw 0.3vw 0 0
+  }
+  .countryName{
+    font-size: 2.2vw;
+    top: 3vw;
+  }
+  .cardItem{
+    margin-left: 4vw;
+  }
+  .desc-item{
+    font-size: 2.17vw;
+  }
+  .bold{
+    font-weight: 600;
+    font-size: 2.17vw;
+    display: inline;
+  }
+  .description{
+    top: 3vw;
+  }
+  #card{
+    margin-bottom: 5vw;
+  }
+  #options{
+    height: auto;
+  }
+  .concealor{
+    top: 5vw;
+    height: 16vw;
+  }
+  .body-dark{
+    min-height: 87.5vw;
+  }
+  #card:hover{
+    transition: 0;
+    transform: scale(1);
+  }
+}
+@media (max-width: 480px){
+  #top-h-cnt{
+    height:21.3vw;
+  }
+  #bottom-header{
+    margin-top: 5vw;
+    flex-direction: column;
+  }
+  #modes{
+    font-size: 3.2vw;
+    width: 30%;
+  }
+  #intro{
+    font-size: 3.7vw
+  }
+  #search{
+    width: 91.5vw;
+    height: 12.8vw;
+    padding-left: 15vw;
+    background-size: 3.5vw 3.5vw;
+    background-position: 7% center;
+  }
+  .select{
+    margin-top: 9vw;
+    width: 53.3vw;
+    background-size: 2vw 2vw;
+    background-position: 91% center;
+  }
+  .select p{
+    margin-left: 4vw
+  }
+  .select,#search,#options{
+    height: 12.8vw;
+    font-size: 3.2vw;
+    border-radius: 1.3vw
+  }
+  #modeimg{
+    width: 4vw;
+    height: 4vw
+  }
+  #countries{
+    display: flex;
+    flex-direction: column;
+    top: 70vw;
+    margin-bottom: 60vw;
+    gap:6vw
+  }
+  #card{
+    margin: auto;
+    width: 70vw;
+    height: 89.6vw;
+    border-radius: 1.3vw;
+    display: relative;
+  }
+  #card:hover{
+    transition: 0;
+    transform: scale(1);
+  }
+  .flag{
+    width: 100%;
+    height: 42.7vw;
+    border-radius: 1.3vw 1.3vw 0 0
+  }
+  .countryName{
+    font-size: 4.8vw;
+    top: 9vw;
+  }
+  .cardItem{
+    margin-left: 6vw;
+  }
+  .desc-item{
+    font-size: 3.7vw;
+  }
+  .bold{
+    font-size: 3.7vw;
+    display: inline;
+  }
+  .description{
+    top: 10vw;
+  }
+  #card{
+    margin-bottom: 5vw;
+  }
+  #options{
+    height: auto;
+    width: 53.3vw;
+    padding: 3vw 0 3vw 0;
+  }
+  .opt-div{
+    margin-left: 5vw
+  }
+  .concealor{
+    top: 20vw;
+    height: 45vw;
+  }
+  .body-dark{
+    min-height: 200vw;
+  }
 }
