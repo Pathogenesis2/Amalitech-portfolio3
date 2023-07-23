@@ -76,6 +76,11 @@ body {
   justify-content: space-between;
 }
 
+.data {
+  z-index: 2;
+  margin-top: 20vw;
+}
+
 #modes {
   display: flex;
   justify-content: flex-end;
@@ -166,6 +171,12 @@ body {
   margin-bottom: 20.5vw;
 }
 
+.countries-wrapper {
+  position: fixed;
+  width: 100%;
+  top: -3vw;
+}
+
 .flag {
   width: 18.3vw;
   height: 11.1vw;
@@ -228,7 +239,7 @@ body {
   height: auto;
 }
 
-#card {
+.card {
   margin-bottom: 5vw;
   width: 18.3vw;
   height: 22.5vw;
@@ -263,11 +274,10 @@ body {
 }
 
 .concealor {
-  position: absolute;
   top: 5vw;
   width: 100%;
   height: 130px;
-  z-index: -1;
+  z-index: 1;
 }
 
 .concealor-light {

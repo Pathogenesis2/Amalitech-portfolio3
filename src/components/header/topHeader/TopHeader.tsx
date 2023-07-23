@@ -1,12 +1,13 @@
 import React from 'react'
 import Mode from './Mode'
+import { Route, Routes } from 'react-router-dom';
 
 //the container of the the top header elements
 interface propsType{
     toggleMode: boolean;
     setToggleMode:  React.Dispatch<React.SetStateAction<boolean>>
 }
-const TopHeaderContainer:React.FC<propsType>=(props)=>{
+const TopHeader:React.FC<propsType>=(props)=>{
     const toggleMode= props.toggleMode
     const setToggleMode= props.setToggleMode
     return(
@@ -15,7 +16,7 @@ const TopHeaderContainer:React.FC<propsType>=(props)=>{
                 <p id='intro' className='top-header'>Where in the world?</p>   
                 <Mode setToggleMode={setToggleMode} toggleMode={toggleMode}/>
             </div>
-        </div>
+        </div>            
     )
 }
-export default TopHeaderContainer
+export default TopHeader

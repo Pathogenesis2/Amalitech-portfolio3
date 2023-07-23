@@ -1,14 +1,15 @@
 import React,{useEffect, useState} from 'react'
 import Search from './search/Search'
 import Select from './select/Select'
+import { Route, Routes } from 'react-router-dom';
 
 interface User{
   handleSearchFilter: (value:string)=>void;
-  handleSelectFilter: (value:string)=>void
-  toggleMode:boolean
+  handleSelectFilter: (value:string)=>void;
+  toggleMode:any
 }
 
-const BottomHeader:React.FC<User>=(props)=>{
+const BottomHeader=(props:User)=>{
    const handleSearchFilter= props.handleSearchFilter
    const handleSelectFilter = props.handleSelectFilter
    const toggleMode= props.toggleMode
@@ -32,14 +33,15 @@ const BottomHeader:React.FC<User>=(props)=>{
     
   
     return(
-        <div id='bottom-h-cnt'>
-                <div id='bottom-header' >
-                    <Search handleSearchFilter={handleSearchFilter} toggleMode={toggleMode}/>
-                    <div id='container'>
-                        <Select handleSelectFilter={handleSelectFilter} toggleMode={toggleMode}/>
-                    </div> 
-                </div>
-        </div> 
+      <div id='bottom-h-cnt'>
+        <div id='bottom-header' >
+          <Search handleSearchFilter={handleSearchFilter} toggleMode={toggleMode}/>
+          <div id='container'>
+            <Select handleSelectFilter={handleSelectFilter} toggleMode={toggleMode}/>
+          </div> 
+        </div>
+      </div>
     )
+               
 }
 export default BottomHeader
