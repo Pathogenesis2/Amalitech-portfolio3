@@ -43,7 +43,6 @@ function Container(){
       setFilteredCountries(countries)
     }
   }
-console.log(countries)
   const handleSelectFilter=(value:string)=>{
     if(value!=='Filter by Region'){
       setFilteredCountries(countries.filter((country)=> country.region.includes(value)))
@@ -55,13 +54,11 @@ console.log(countries)
   return (
     <div className={toggleMode?'body-light':'body-dark'}>
       <Routes>
-        <Route path='/CountryName/:CountryInfo' element={<GetCountryInfo toggleMode={toggleMode}/>}/>
+        <Route path='/CountryName/:CountryInfo'  Component={()=> <GetCountryInfo toggleMode={toggleMode} countries={countries}/>}/>
+        <Route path='/' Component={()=><CountriesContainer countries={filteredCountries} toggleMode={toggleMode}/>}/>
       </Routes>
-      <Routes>
-        <Route path='/' Component={()=><CountriesContainer countries={filteredCountries} toggleMode={toggleMode} handleSelectFilter={handleSelectFilter}
-        handleSearchFilter={handleSearchFilter}/>}/>
-      </Routes>
-      <Header setToggleMode={setToggleMode} toggleMode={toggleMode}/>
+        <Header setToggleMode={setToggleMode} toggleMode={toggleMode} handleSelectFilter={handleSelectFilter}
+        handleSearchFilter={handleSearchFilter}/>
     </div>
   )
 }

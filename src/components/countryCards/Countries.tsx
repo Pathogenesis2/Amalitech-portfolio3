@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import BottomHeader from '../header/bottomHeader/BottomHeaderContainer'
 
 interface User {
   flags:{
@@ -18,15 +17,11 @@ interface User {
 interface propsType{
   countries: User[];
   toggleMode: boolean;
-  handleSelectFilter: (value:string)=> void;
-  handleSearchFilter: (value:string)=> void
 }
 
 const Countries:React.FC<propsType> =(props)=>{
   const countries=props.countries
   const toggleMode=props.toggleMode
-  const handleSearchFilter = props.handleSearchFilter
-  const handleSelectFilter = props.handleSelectFilter
   return(
     <>
       <div id='countries' >
@@ -53,11 +48,6 @@ const Countries:React.FC<propsType> =(props)=>{
             )
           })
         }
-      </div>
-      <div className='countries-wrapper' >
-        <div className={`${toggleMode? 'concealor-light': 'concealor-dark'} concealor`}></div>
-        <BottomHeader handleSelectFilter={handleSelectFilter} handleSearchFilter={handleSearchFilter} 
-        toggleMode={toggleMode}/>
       </div>
     </>
     

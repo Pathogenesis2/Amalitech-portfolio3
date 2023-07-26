@@ -1,8 +1,7 @@
 import React from 'react'
 import Mode from './Mode'
-import { Route, Routes } from 'react-router-dom';
 
-//the container of the the top header elements
+
 interface propsType{
     toggleMode: boolean;
     setToggleMode:  React.Dispatch<React.SetStateAction<boolean>>
