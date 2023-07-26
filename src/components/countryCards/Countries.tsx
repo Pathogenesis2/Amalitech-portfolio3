@@ -36,7 +36,7 @@ const Countries:React.FC<propsType> =(props)=>{
                     <div className='description'>
                       <div className='cardItem desc-item population'>
                         <p className='bold'>Population : &nbsp;</p> 
-                        {item.population}</div>
+                        {item.population.toLocaleString()}</div>
                       <div className='cardItem desc-item region'>
                         <p className='bold'>Region : &nbsp;</p> 
                       {item.region}</div>

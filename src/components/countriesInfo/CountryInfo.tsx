@@ -145,7 +145,7 @@ const GetCountryInfo: React.FC<propsType> = (props) => {
                   </div>
                   <div>
                     <span>Population:&nbsp;</span>
-                    {item.population}
+                    {item.population.toLocaleString()}
                   </div>
                   <div>
                     <span>Region:&nbsp;</span>
