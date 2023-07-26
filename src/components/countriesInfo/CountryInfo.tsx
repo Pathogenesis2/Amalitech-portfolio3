@@ -7,7 +7,7 @@ import directionDark from "./directionDark.svg";
 interface User {
   cca3: string;
   flags: {
-    png: string;
+    svg: string;
   };
   name: {
     common: string;
@@ -43,11 +43,17 @@ const GetCountryInfo: React.FC<propsType> = (props) => {
   const countries = props.countries;
   const { CountryInfo } = useParams();
   const [country, setCountry] = useState<User[]>([]);
+
+
   useEffect(() => {
+
+    /**
+     * This function calls the API for a country that has been clicked by user
+     */
     const getCountryByName = () => {
       axios
         .get(`https://restcountries.com/v3.1/name/${CountryInfo}`)
-        .then((res) => setCountry(res.data))
+        .then((res) => setCountry(res.data.filter((item: { name: { common: any; }; })=>item.name.common===CountryInfo)))
         .catch((err) => console.log(err));
     };
     getCountryByName();
@@ -58,10 +64,25 @@ const GetCountryInfo: React.FC<propsType> = (props) => {
   const languageKeyList: any = [];
   const borderList: any = [];
 
+  /**
+   * This function accepts two parameters which {element} and {arr}
+   * const Obj stores the result of passing parameter {element} to {item} as a key of Item
+   * {country[item]?.[element]?}.
+   * Obj is iterated and the keys found in {Obj} are saved in [arr]
+   * 
+   * @param element - Holds any valid string that can be used as a key of {country[item]?} 
+   * @param arr  - Corresponding array created outside the function to hold the result of the first code block
+   */
   const ObjConverter = (element: string | number, arr: any[]) => {
     const Obj = country.map((item) => item[element as keyof typeof item]);
     Obj.forEach((item: {}) => arr.push(...Object.keys(item)));
   };
+
+  /*
+  *This function saves an array of objects when exists in {country[item]?.name.nativeName}
+  *in nativeObj
+  *nativeObject is being iterated through and the keys in native object are saved to {nativeNameKeyList}
+  */
 
   const NativeName = () => {
     const nativeObj = country.map((item) => item.name.nativeName);
@@ -73,6 +94,11 @@ const GetCountryInfo: React.FC<propsType> = (props) => {
   ObjConverter("languages", languageKeyList);
 
 
+  /*
+  This function map through the borders of {country} and save
+  them in an array {borderList}
+  */
+
   const borderCountries = () => {
     country.forEach((item) => {
       try {
@@ -83,6 +109,12 @@ const GetCountryInfo: React.FC<propsType> = (props) => {
     });
   };
 
+
+  /*
+  This function filters {countries} with {cca3} values that can be found in 
+  borderList and save them in {filterCountry}
+  */
+
   borderCountries();
   const filterCountry: User[] = countries.filter((item: { cca3: any }) =>
     borderList.includes(item.cca3)
@@ -90,15 +122,15 @@ const GetCountryInfo: React.FC<propsType> = (props) => {
 
   return (
     <div className="data">
-      <div className="back-btn">
-        <img alt='back-btn'
-          className="direction"
-          src={toggleMode ? directionLight : directionDark}
-        />
-        <Link to="/">
+      <Link to="/">
+        <div className="back-btn" onClick={()=>window.scrollTo(0,0)}>
+          <img alt='back-btn'
+            className="direction"
+            src={toggleMode ? directionLight : directionDark}
+          />
           <p>Back</p>
-        </Link>
-      </div>
+        </div>
+      </Link>
       {country.map((item: any) => {
         return (
           <div className="data-card">
@@ -183,7 +215,7 @@ const GetCountryInfo: React.FC<propsType> = (props) => {
                   {filterCountry.map((item) => {
                     return (
                       <Link to={`/CountryName/${item.name.common}`}>
-                        <li key={`${item.name.common}`} className="borders">{item.name.common}</li>&nbsp;
+                        <li key={item.name.common} className="borders" onClick={()=>window.scrollTo(0,0)}>{item.name.common}</li>&nbsp;
                       </Link>
                     );
                   })}

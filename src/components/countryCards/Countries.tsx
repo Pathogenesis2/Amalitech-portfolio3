@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 interface User {
   flags:{
-    png: string
+    svg: string
   }
   name:{
     common: string
@@ -29,7 +29,8 @@ const Countries:React.FC<propsType> =(props)=>{
           countries.map((item:any,index:number)=>{
             return (
               <Link to={`/CountryName/${item.name.common}`} key={item.name.common}>
-                <div key={item} className={`card ${toggleMode?'child-light ':'child-dark'}`} style={{cursor: 'pointer'}}>
+                <div key={item} className={`card ${toggleMode?'child-light ':'child-dark'}`} style={{cursor: 'pointer'}}
+                onClick={()=>window.scrollTo(0,0)}>
                     <img src={item.flags.png} alt="flag" className='flag' />
                     <p className='cardItem countryName'>{item.name.common}</p>
                     <div className='description'>

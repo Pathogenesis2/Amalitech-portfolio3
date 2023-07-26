@@ -3,7 +3,7 @@ import Countries from './Countries'
 
 interface User {
   flags:{
-    png: string
+    svg: string
   }
   name:{
     common: string

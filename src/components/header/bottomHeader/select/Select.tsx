@@ -5,13 +5,18 @@ import pointerWhite from './pointerWhite.png'
 let countryList: string[]= ['Africa','America','Asia','Europe','Oceania']
 interface User{
     handleSelectFilter: (value:string)=>void,
-    toggleMode: boolean
+    toggleMode: boolean;
+    display: boolean;
+    setDisplay: React.Dispatch<React.SetStateAction<boolean>>
 }
 const Select:React.FC<User> =(props)=>{
+    const display = props.display
+    const setDisplay = props.setDisplay
     const toggleMode = props.toggleMode
     const handleSelectFilter= props.handleSelectFilter
     const [list, setList]= useState<string[]>([])
-    const [display, setDisplay] = useState(false);
+    
+    const [selectedValue, setSelectedValue] = useState('Filter by Region')
     useEffect(()=>{
         if(countryList.includes(selectedValue)){
             display && setList(countryList.filter((item)=>selectedValue!==item))
@@ -20,12 +25,11 @@ const Select:React.FC<User> =(props)=>{
             display && setList(countryList)
         }
         return (()=>setList([]))
-    },[display])
+    },[display,selectedValue])
 
     const handleButClick=()=>{
         setDisplay(display=>!display)
     }
-    const [selectedValue, setSelectedValue] = useState('Filter by Region')
    
     const handleOptClick=(e: React.MouseEvent<HTMLDivElement>)=>{
         setSelectedValue(e.currentTarget.id)
