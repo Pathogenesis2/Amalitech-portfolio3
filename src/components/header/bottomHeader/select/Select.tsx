@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import arrowdown from './arrowdown.svg'
 import pointerWhite from './pointerWhite.png'
 
-let countryList: string[]= ['Africa','America','Asia','Europe','Oceania']
+let countryList: string[]= ['All Countries','Africa','America','Asia','Europe','Oceania']
 interface User{
     handleSelectFilter: (value:string)=>void,
     toggleMode: boolean;

@@ -247,7 +247,7 @@
     width: 10%;
     border-radius: 0.4vw;
     padding: 0.6vw 2vw 0.6vw 2vw;
-    box-shadow: 0 0 5px 1px #d3d3d3;
+    border: 2px solid black;
     .direction{
       width: 1vw;
       height: 1vw;
@@ -322,7 +322,7 @@
             font-weight: 400;
             font-size: 0.97vw;
             padding: 0.3vw 1vw 0.3vw 1vw;
-            box-shadow: 0 0 5px 1px #d3d3d3;
+            border: 2px solid black;
           }
           .borders:active{
             transform: scale(0.9)

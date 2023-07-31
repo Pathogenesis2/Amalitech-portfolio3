@@ -15,7 +15,7 @@ interface User {
 }
 
 interface propsType{
-  countries: User[];
+  countries: User[] | string;
   toggleMode: boolean;
 }
 

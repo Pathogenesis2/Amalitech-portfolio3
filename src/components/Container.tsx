@@ -30,6 +30,8 @@ function Container(){
   const [toggleMode, setToggleMode]=useState(true)
   const [countries, setCountries]=useState<User[]>([])
   const [filteredCountries, setFilteredCountries] = useState<User[]>([])
+  const [name,setName] = useState<string>('')
+  const [continent, setContinent] = useState<string>('All Countries')
   const [display, setDisplay] = useState(false);
 
     useEffect(() => {
@@ -39,32 +41,54 @@ function Container(){
       axios.get('https://restcountries.com/v3.1/all')
       .then((res) => {
         setCountries(res.data)
-        setFilteredCountries(res.data)
       }).catch((err) => console.log(err));
     }
     getCountries()
   },[])  
 
+useEffect(()=>{
+  if((name.trim()).length>1){
+    if(continent!== 'Filter by Region' && continent!=='All Countries'){
+      if(countries.filter(country=>((country.name.common).toLowerCase()).includes(name.trim().toLowerCase()))){
+        setFilteredCountries(countries.filter(country=>(country.region).includes(continent) && 
+      ((country.name.common).toLowerCase()).includes(name.trim().toLowerCase())))
+      }
+      else{
+        setFilteredCountries(countries.filter(country=>((country.region).includes(continent))))
+      }
+    }
+    else{
+      if(countries.filter(country=>((country.name.common).toLowerCase()).includes(name.trim().toLowerCase()))){
+        setFilteredCountries(countries.filter(country=>((country.name.common).toLowerCase()).includes(name.trim().toLowerCase())))
+      }
+      else{
+        setFilteredCountries(countries.filter(country=>((country.region))))
+      }
+    }
+  }
+  else{
+    if(continent!== 'Filter by Region' && continent!=='All Countries'){
+      setFilteredCountries(countries.filter(country=>((country.region).includes(continent))))
+    }
+    else{
+      setFilteredCountries(countries.filter(country=>((country.region))))
+    }
+  }
+
+
+  window.scrollTo(0,0)
+},[continent, name,countries])
+
   window.addEventListener('scroll',(()=>setDisplay(false))) 
  
   // This function takes a parameter and filters through {filteredCountry} based on country name with the parameter
   const handleSearchFilter=(value:string)=>{
-    if(value!== ''){
-      setFilteredCountries(countries.filter((country)=> country.name.common.toLowerCase().includes(value.toLowerCase())))
-    }
-    else{
-      setFilteredCountries(countries)
-    }
+    setName(value)
   }
 
   // This function takes a parameter and filters through {filteredCountry} based on continent with the parameter
   const handleSelectFilter=(value:string)=>{
-    if(value!=='Filter by Region'){
-      setFilteredCountries(countries.filter((country)=> country.region.includes(value)))
-    }
-    else{
-      setFilteredCountries(countries)
-    }
+    setContinent(value)
   }
 
 

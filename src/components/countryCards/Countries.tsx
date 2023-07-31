@@ -15,18 +15,19 @@ interface User {
 }
 
 interface propsType{
-  countries: User[];
+  countries: User[] | any;
   toggleMode: boolean;
 }
 
 const Countries:React.FC<propsType> =(props)=>{
   const countries=props.countries
   const toggleMode=props.toggleMode
+
   return(
     <>
       <div id='countries' >
         {
-          countries.map((item:any,index:number)=>{
+          countries.map((item:any)=>{
             return (
               <Link to={`/CountryName/${item.name.common}`} key={item.name.common}>
                 <div key={item} className={`card ${toggleMode?'child-light ':'child-dark'}`} style={{cursor: 'pointer'}}
@@ -54,5 +55,4 @@ const Countries:React.FC<propsType> =(props)=>{
     
   )
 }
-      
 export default Countries

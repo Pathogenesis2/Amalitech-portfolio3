@@ -19,7 +19,7 @@ const Search:React.FC<propsType>=(props)=>{
 
     
     return  <input type='search' id='search' className={toggleMode?'srch light': 'srch-dark'} 
-    placeholder='Search for country...' value={searchVal} onChange={handleChange} 
+    placeholder='Search for country...' value={searchVal} onInput={handleChange} 
     style={toggleMode?{backgroundImage: `url(${search})`}:{backgroundImage:`url(${searchDark})`}} onClick={()=>setDisplay(false)}/>
 }
 export default Search
