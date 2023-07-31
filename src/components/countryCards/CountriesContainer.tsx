@@ -17,14 +17,16 @@ interface User {
 interface propsType{
   countries: User[] | string;
   toggleMode: boolean;
+  setClickMonintor:React.Dispatch<React.SetStateAction<boolean | undefined>>
 }
 
 
 const CountriesContainer:React.FC<propsType>=(props)=>{
   const countries=props.countries
   const toggleMode=props.toggleMode
+  const setClickMonintor=props.setClickMonintor
 
-  return <Countries countries={countries} toggleMode={toggleMode}/>
+  return <Countries setClickMonitor={setClickMonintor} countries={countries} toggleMode={toggleMode}/>
 } 
 
 export default CountriesContainer

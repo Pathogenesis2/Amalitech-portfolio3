@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 
 interface User {
@@ -16,12 +16,18 @@ interface User {
 
 interface propsType{
   countries: User[] | any;
+  setClickMonitor: React.Dispatch<React.SetStateAction<boolean | undefined>>
   toggleMode: boolean;
 }
 
 const Countries:React.FC<propsType> =(props)=>{
   const countries=props.countries
   const toggleMode=props.toggleMode
+  const setClickMonitor = props.setClickMonitor
+  const onclick =()=>{
+    window.scrollTo(0,0)
+    setClickMonitor(true)
+  }
 
   return(
     <>
@@ -31,7 +37,7 @@ const Countries:React.FC<propsType> =(props)=>{
             return (
               <Link to={`/CountryName/${item.name.common}`} key={item.name.common}>
                 <div key={item} className={`card ${toggleMode?'child-light ':'child-dark'}`} style={{cursor: 'pointer'}}
-                onClick={()=>window.scrollTo(0,0)}>
+                onClick={onclick}>
                     <img src={item.flags.png} alt="flag" className='flag' />
                     <p className='cardItem countryName'>{item.name.common}</p>
                     <div className='description'>

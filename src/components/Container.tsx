@@ -33,6 +33,7 @@ function Container(){
   const [name,setName] = useState<string>('')
   const [continent, setContinent] = useState<string>('All Countries')
   const [display, setDisplay] = useState(false);
+  const [clickMonitor,setClickMonitor] = useState<boolean>()
 
     useEffect(() => {
     const getCountries= async ()=>{
@@ -46,38 +47,41 @@ function Container(){
     getCountries()
   },[])  
 
-useEffect(()=>{
-  if((name.trim()).length>1){
-    if(continent!== 'Filter by Region' && continent!=='All Countries'){
-      if(countries.filter(country=>((country.name.common).toLowerCase()).includes(name.trim().toLowerCase()))){
-        setFilteredCountries(countries.filter(country=>(country.region).includes(continent) && 
-      ((country.name.common).toLowerCase()).includes(name.trim().toLowerCase())))
+  useEffect(()=>{
+    if(clickMonitor===true){
+      setName('')
+    }
+    if((name.trim()).length>1){
+      if(continent!== 'Filter by Region' && continent!=='All Countries'){
+        if(countries.filter(country=>((country.name.common).toLowerCase()).includes(name.trim().toLowerCase()))){
+          setFilteredCountries(countries.filter(country=>(country.region).includes(continent) && 
+        ((country.name.common).toLowerCase()).includes(name.trim().toLowerCase())))
+        }
+        else{
+          setFilteredCountries(countries.filter(country=>((country.region).includes(continent))))
+        }
       }
+      
       else{
-        setFilteredCountries(countries.filter(country=>((country.region).includes(continent))))
+        if(countries.filter(country=>((country.name.common).toLowerCase()).includes(name.trim().toLowerCase()))){
+          setFilteredCountries(countries.filter(country=>((country.name.common).toLowerCase()).includes(name.trim().toLowerCase())))
+        }
+        else{
+          setFilteredCountries(countries.filter(country=>((country.region))))
+        }
       }
     }
     else{
-      if(countries.filter(country=>((country.name.common).toLowerCase()).includes(name.trim().toLowerCase()))){
-        setFilteredCountries(countries.filter(country=>((country.name.common).toLowerCase()).includes(name.trim().toLowerCase())))
+      if(continent!== 'Filter by Region' && continent!=='All Countries'){
+        setFilteredCountries(countries.filter(country=>((country.region).includes(continent))))
       }
       else{
         setFilteredCountries(countries.filter(country=>((country.region))))
       }
     }
-  }
-  else{
-    if(continent!== 'Filter by Region' && continent!=='All Countries'){
-      setFilteredCountries(countries.filter(country=>((country.region).includes(continent))))
-    }
-    else{
-      setFilteredCountries(countries.filter(country=>((country.region))))
-    }
-  }
-
-
-  window.scrollTo(0,0)
-},[continent, name,countries])
+    window.scrollTo(0,0)
+    return (()=>setClickMonitor(false))
+  },[continent, name,countries,clickMonitor])
 
   window.addEventListener('scroll',(()=>setDisplay(false))) 
  
@@ -91,12 +95,12 @@ useEffect(()=>{
     setContinent(value)
   }
 
-
+console.log(name, continent)
   return (
     <div className={toggleMode?'body-light':'body-dark'}>
       <Routes>
         <Route path='/CountryName/:CountryInfo'  Component={()=> <GetCountryInfo toggleMode={toggleMode} countries={countries}/>}/>
-        <Route path='/' Component={()=><CountriesContainer countries={filteredCountries} toggleMode={toggleMode}/>}/>
+        <Route path='/' Component={()=><CountriesContainer setClickMonintor={setClickMonitor} countries={filteredCountries} toggleMode={toggleMode}/>}/>
       </Routes>
         <Header setToggleMode={setToggleMode} toggleMode={toggleMode} handleSelectFilter={handleSelectFilter}
         handleSearchFilter={handleSearchFilter} display={display} setDisplay= {setDisplay}/>
