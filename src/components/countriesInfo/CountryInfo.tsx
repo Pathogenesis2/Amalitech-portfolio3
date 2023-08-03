@@ -44,16 +44,21 @@ const GetCountryInfo: React.FC<propsType> = (props) => {
   const { CountryInfo } = useParams();
   const [country, setCountry] = useState<User[]>([]);
 
-
   useEffect(() => {
-
     /**
      * This function calls the API for a country that has been clicked by user
      */
     const getCountryByName = () => {
       axios
         .get(`https://restcountries.com/v3.1/name/${CountryInfo}`)
-        .then((res) => setCountry(res.data.filter((item: { name: { common: any; }; })=>item.name.common===CountryInfo)))
+        .then((res) =>
+          setCountry(
+            res.data.filter(
+              (item: { name: { common: any } }) =>
+                item.name.common === CountryInfo
+            )
+          )
+        )
         .catch((err) => console.log(err));
     };
     getCountryByName();
@@ -69,8 +74,8 @@ const GetCountryInfo: React.FC<propsType> = (props) => {
    * const Obj stores the result of passing parameter {element} to {item} as a key of Item
    * {country[item]?.[element]?}.
    * Obj is iterated and the keys found in {Obj} are saved in [arr]
-   * 
-   * @param element - Holds any valid string that can be used as a key of {country[item]?} 
+   *
+   * @param element - Holds any valid string that can be used as a key of {country[item]?}
    * @param arr  - Corresponding array created outside the function to hold the result of the first code block
    */
   const ObjConverter = (element: string | number, arr: any[]) => {
@@ -79,10 +84,10 @@ const GetCountryInfo: React.FC<propsType> = (props) => {
   };
 
   /*
-  *This function saves an array of objects when exists in {country[item]?.name.nativeName}
-  *in nativeObj
-  *nativeObject is being iterated through and the keys in native object are saved to {nativeNameKeyList}
-  */
+   *This function saves an array of objects when exists in {country[item]?.name.nativeName}
+   *in nativeObj
+   *nativeObject is being iterated through and the keys in native object are saved to {nativeNameKeyList}
+   */
 
   const NativeName = () => {
     const nativeObj = country.map((item) => item.name.nativeName);
@@ -92,7 +97,6 @@ const GetCountryInfo: React.FC<propsType> = (props) => {
 
   ObjConverter("currencies", currencyKeyList);
   ObjConverter("languages", languageKeyList);
-
 
   /*
   This function map through the borders of {country} and save
@@ -109,7 +113,6 @@ const GetCountryInfo: React.FC<propsType> = (props) => {
     });
   };
 
-
   /*
   This function filters {countries} with {cca3} values that can be found in 
   borderList and save them in {filterCountry}
@@ -121,110 +124,121 @@ const GetCountryInfo: React.FC<propsType> = (props) => {
   );
 
   return (
-    <div className="data">
-      <Link to="/">
-        <div className="back-btn" onClick={()=>window.scrollTo(0,0)}>
-          <img alt='back-btn'
-            className="direction"
-            src={toggleMode ? directionLight : directionDark}
-          />
-          <p>Back</p>
-        </div>
-      </Link>
-      {country.map((item: any) => {
-        return (
-          <div className="data-card">
-            <img src={item.flags.png} alt='country-flag' />
-            <div className="info">
-              <p className="name data-ele">{item.name.common}</p>
-              <div className="name-data-cnt">
-                <div className="left-data">
-                  <div>
-                    <span>Native Name:&nbsp;</span>
-                    {item.name.nativeName[nativeNamekeyList]?.common}
+    <div className="data-wrapper">
+      <div className="grey"></div>
+      <div className="data">
+        <Link to="/">
+          <div className="back-btn" onClick={() => window.scrollTo(0, 0)}>
+            <img
+              alt="back-btn"
+              className="direction"
+              src={toggleMode ? directionLight : directionDark}
+            />
+            <p>Back</p>
+          </div>
+        </Link>
+        {country.map((item: any) => {
+          return (
+            <div className="data-card">
+              <img src={item.flags.png} alt="country-flag" />
+              <div className="info">
+                <p className="name data-ele">{item.name.common}</p>
+                <div className="name-data-cnt">
+                  <div className="left-data">
+                    <div>
+                      <span>Native Name:&nbsp;</span>
+                      {item.name.nativeName[nativeNamekeyList]?.common}
+                    </div>
+                    <div>
+                      <span>Population:&nbsp;</span>
+                      {item.population.toLocaleString()}
+                    </div>
+                    <div>
+                      <span>Region:&nbsp;</span>
+                      {item.region}
+                    </div>
+                    <div>
+                      <span>Sub Region:&nbsp;</span>
+                      {item.subregion}
+                    </div>
+                    <div>
+                      <span>Capital:&nbsp;</span>
+                      {item.capital}
+                    </div>
                   </div>
-                  <div>
-                    <span>Population:&nbsp;</span>
-                    {item.population.toLocaleString()}
-                  </div>
-                  <div>
-                    <span>Region:&nbsp;</span>
-                    {item.region}
-                  </div>
-                  <div>
-                    <span>Sub Region:&nbsp;</span>
-                    {item.subregion}
-                  </div>
-                  <div>
-                    <span>Capital:&nbsp;</span>
-                    {item.capital}
+                  <div className="right-data">
+                    <div>
+                      <span>Top Level Domain:&nbsp;</span>
+                      {item.tld[0]}
+                    </div>
+                    <div>
+                      <span>Currencies:&nbsp;</span>
+                      {currencyKeyList.map((element: string) => {
+                        try {
+                          return (
+                            <>
+                              <div style={{ display: "inline" }}>
+                                {item.currencies[element]?.name} &nbsp; &nbsp;
+                              </div>
+                            </>
+                          );
+                        } catch (error) {
+                          return (
+                            <>
+                              <div style={{ display: "inline" }}>None</div>
+                            </>
+                          );
+                        }
+                      })}
+                    </div>
+                    <div>
+                      <span>Langauges:&nbsp;</span>
+                      {languageKeyList.map((element: string, index: number) => {
+                        if (index !== languageKeyList.length - 1) {
+                          return (
+                            <>
+                              <div style={{ display: "inline" }}>
+                                {item.languages[element]}, &nbsp;
+                              </div>
+                            </>
+                          );
+                        } else {
+                          return (
+                            <>
+                              <div style={{ display: "inline" }}>
+                                {item.languages[element]}
+                              </div>
+                            </>
+                          );
+                        }
+                      })}
+                    </div>
                   </div>
                 </div>
-                <div className="right-data">
-                  <div>
-                    <span>Top Level Domain:&nbsp;</span>
-                    {item.tld[0]}
-                  </div>
-                  <div>
-                    <span>Currencies:&nbsp;</span>
-                    {currencyKeyList.map((element: string) => {
-                      try {
-                        return (
-                          <>
-                            <div style={{ display: "inline" }}>
-                              {item.currencies[element]?.name} &nbsp; &nbsp;
-                            </div>
-                          </>
-                        );
-                      } catch (error) {
-                        return (
-                          <>
-                            <div style={{ display: "inline" }}>None</div>
-                          </>
-                        );
-                      }
+                <div className="border">
+                  <ul className="border-list">
+                    <span>Border Countries:</span>
+                    {filterCountry.map((item) => {
+                      return (
+                        <Link to={`/CountryName/${item.name.common}`}>
+                          <li
+                            key={item.name.common}
+                            className="borders"
+                            onClick={() => window.scrollTo(0, 0)}
+                          >
+                            {item.name.common}
+                          </li>
+                          &nbsp;
+                        </Link>
+                      );
                     })}
-                  </div>
-                  <div>
-                    <span>Langauges:&nbsp;</span>
-                    {languageKeyList.map((element: string, index: number) => {
-                      if (index !== languageKeyList.length - 1) {
-                        return (
-                          <>
-                            <div style={{ display: "inline" }}>
-                              {item.languages[element]}, &nbsp;
-                            </div>
-                          </>
-                        );
-                      } else {
-                        return (
-                          <>
-                            <div style={{ display: "inline" }}>
-                              {item.languages[element]}
-                            </div>
-                          </>
-                        );
-                      }
-                    })}
-                  </div>
+                  </ul>
                 </div>
-              </div>
-              <div className="border">
-                <ul className="border-list">
-                  <span>Border Countries:</span>
-                  {filterCountry.map((item) => {
-                    return (
-                      <Link to={`/CountryName/${item.name.common}`}>
-                        <li key={item.name.common} className="borders" onClick={()=>window.scrollTo(0,0)}>{item.name.common}</li>&nbsp;
-                      </Link>
-                    );
-                  })}
-                </ul>
               </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 };

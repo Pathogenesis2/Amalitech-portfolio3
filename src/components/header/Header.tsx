@@ -30,7 +30,7 @@ const Header: React.FC<MyProps>=(props)=>{
 //Function is meant to render the content of the return function to the parent component.
     return(
         <div id='header'>
-            <TopHeader setToggleMode={setToggleMode} toggleMode={toggleMode}/>
+            <TopHeader setToggleMode={setToggleMode} toggleMode={toggleMode} setDisplay={setDisplay}/>
             {location.pathname==='/'? <div className={`${toggleMode? 'concealor-light': 'concealor-dark'} concealor`}></div>: null}
             {location.pathname==='/'?<BottomHeader handleSelectFilter={handleSelectFilter} 
             display={display} setDisplay={setDisplay} handleSearchFilter={handleSearchFilter}

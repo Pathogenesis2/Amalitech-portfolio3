@@ -15,7 +15,7 @@ const Mode:React.FC<propsType>=(props)=>{
         <>
             <div id='modes' className='top-header' onClick={handleClick}>
                 <img src={toggleMode?lightmode:darkmode} id='modeimg' className='modes' alt='dark/light' />
-                <p id='mode-text' className='modes'>{toggleMode? 'Light Mode': 'Dark Mode'}</p>
+                <p id='mode-text' className='modes'>{toggleMode? 'Dark Mode': 'Light Mode'}</p>
             </div>
         </>
     )
