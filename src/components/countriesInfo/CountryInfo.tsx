@@ -1,4 +1,4 @@
-import axios from "axios";
+
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import directionLight from "./directionLight.svg";
@@ -48,22 +48,8 @@ const GetCountryInfo: React.FC<propsType> = (props) => {
     /**
      * This function calls the API for a country that has been clicked by user
      */
-    const getCountryByName = () => {
-      axios
-        .get(`https://restcountries.com/v3.1/name/${CountryInfo}`)
-        .then((res) =>
-          setCountry(
-            res.data.filter(
-              (item: { name: { common: any } }) =>
-                item.name.common === CountryInfo
-            )
-          )
-        )
-        .catch((err) => console.log(err));
-    };
-    getCountryByName();
-  }, [CountryInfo]);
-
+    setCountry(countries.filter((item: { name: { common: any; }; })=> item.name.common === CountryInfo))
+  }, [CountryInfo, countries]);
   let nativeNamekeyList: any = "";
   const currencyKeyList: any = [];
   const languageKeyList: any = [];
@@ -79,8 +65,13 @@ const GetCountryInfo: React.FC<propsType> = (props) => {
    * @param arr  - Corresponding array created outside the function to hold the result of the first code block
    */
   const ObjConverter = (element: string | number, arr: any[]) => {
-    const Obj = country.map((item) => item[element as keyof typeof item]);
+    try{
+      const Obj = country.map((item) => item[element as keyof typeof item]);
     Obj.forEach((item: {}) => arr.push(...Object.keys(item)));
+    }
+    catch(error){
+      console.log(error)
+    }
   };
 
   /*
@@ -90,8 +81,13 @@ const GetCountryInfo: React.FC<propsType> = (props) => {
    */
 
   const NativeName = () => {
-    const nativeObj = country.map((item) => item.name.nativeName);
-    nativeObj.forEach((item) => (nativeNamekeyList = Object.keys(item)));
+    try{
+      const nativeObj = country.map((item) => item.name.nativeName);
+      nativeObj.forEach((item) => (nativeNamekeyList = Object.keys(item)));
+    }
+    catch(error){
+      console.log(error)
+    }
   };
   NativeName();
 
@@ -108,7 +104,7 @@ const GetCountryInfo: React.FC<propsType> = (props) => {
       try {
         return borderList.push(...item.borders);
       } catch (error) {
-        borderList.push("none");
+        console.log(error);
       }
     });
   };
@@ -137,7 +133,8 @@ const GetCountryInfo: React.FC<propsType> = (props) => {
             <p>Back</p>
           </div>
         </Link>
-        {country.map((item: any) => {
+        {
+          country.map((item: any) => {
           return (
             <div className="data-card">
               <img src={item.flags.png} alt="country-flag" />
@@ -147,7 +144,7 @@ const GetCountryInfo: React.FC<propsType> = (props) => {
                   <div className="left-data">
                     <div>
                       <span>Native Name:&nbsp;</span>
-                      {item.name.nativeName[nativeNamekeyList]?.common}
+                      {Object.keys(item.name).includes('nativeName')?item.name.nativeName[nativeNamekeyList]?.common: null}
                     </div>
                     <div>
                       <span>Population:&nbsp;</span>
